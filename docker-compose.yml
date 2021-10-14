@@ -1,0 +1,47 @@
+version: "3.2"
+
+services:
+  base-listener:
+    image: base-listener
+    build:
+      context: .
+      dockerfile: BaseListener/Dockerfile
+      args:
+        - LBHPACKAGESTOKEN=${LBHPACKAGESTOKEN}
+    ports:
+      - 3000:3000
+    environment:
+     - ENVIRONMENT=LocalDevelopment
+      # Alter if not using DynamoDb
+     - DynamoDb_LocalMode=true
+     - DynamoDb_LocalServiceUrl=http://dynamodb-database:8000
+     - AWS_REGION=eu-west-2
+     - AWS_ACCESS_KEY_ID=local
+     - AWS_SECRET_ACCESS_KEY=local
+    links:
+      - dynamodb-database
+
+  base-listener-test:
+    image: base-listener-test
+    build:
+      context: .
+      dockerfile: BaseListener.Tests/Dockerfile
+      args:
+        - LBHPACKAGESTOKEN=${LBHPACKAGESTOKEN}
+    environment:
+      - ENVIRONMENT=LocalDevelopment
+      # Alter if not using DynamoDb
+      - DynamoDb_LocalMode=true
+      - DynamoDb_LocalServiceUrl=http://dynamodb-database:8000
+      - AWS_REGION=eu-west-2
+      - AWS_ACCESS_KEY_ID=local
+      - AWS_SECRET_ACCESS_KEY=local
+    links:
+      - dynamodb-database
+    
+  # Alter if not using DynamoDb
+  dynamodb-database:
+    image: amazon/dynamodb-local
+    ports:
+      - 8000:8000
+      
