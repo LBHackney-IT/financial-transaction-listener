@@ -79,13 +79,13 @@ commands:
       - run:
           name: Build lambda
           command: |
-            cd ./BaseListener/
+            cd ./FinancialTransactionListener/
             chmod +x ./build.sh
             ./build.sh
       - run:
           name: Deploy lambda
           command: |
-            cd ./BaseListener/
+            cd ./FinancialTransactionListener/
             sls deploy --stage <<parameters.stage>> --account <<parameters.aws-account>> --conceal
 
 jobs:
@@ -106,10 +106,10 @@ jobs:
       - setup_remote_docker
       - run:
           name: build
-          command: docker-compose build base-listener-test
+          command: docker-compose build financial-transaction-listener-test
       - run:
           name: Run tests
-          command: docker-compose run base-listener-test
+          command: docker-compose run financial-transaction-listener-test
   assume-role-development:
     executor: docker-python
     steps:

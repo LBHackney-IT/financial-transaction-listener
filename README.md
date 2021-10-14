@@ -19,7 +19,7 @@ Base Listener is a boilerplate template application for creating for new Listene
 
 ### Renaming
 
-The renaming of `BaseListener` into `SomethingElseListener` can be done by running a Renamer powershell script. To do so:
+The renaming of `FinancialTransactionListener` into `SomethingElseListener` can be done by running a Renamer powershell script. To do so:
 1. Open the powershell and navigate to this directory's root.
 2. Run the script using the following command:
 ```
@@ -133,7 +133,7 @@ $ make test
 - Always follow a TDD approach
 - Tests should be independent of each other
 - Gateway tests should interact with a real test instance of the database
-- Test coverage should never go down. (See the [test project readme](BaseListener.Tests/readme.md#Run-coverage) for how to run a coverage check.)
+- Test coverage should never go down. (See the [test project readme](FinancialTransactionListener.Tests/readme.md#Run-coverage) for how to run a coverage check.)
 - All use cases should be covered by E2E tests
 - Optimise when test run speed starts to hinder development
 - Unit tests and E2E tests should run in CI
