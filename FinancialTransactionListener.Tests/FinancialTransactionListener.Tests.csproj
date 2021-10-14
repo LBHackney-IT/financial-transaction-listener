@@ -45,6 +45,13 @@
   </ItemGroup>
     
   <ItemGroup>
+    <Compile Remove="DynamoDbFixture.cs" />
+    <Compile Remove="E2ETests\Steps\DoSomethingUseCaseSteps.cs" />
+    <Compile Remove="E2ETests\Stories\DoSomethingTests.cs" />
+    <Compile Remove="Gateway\DynamoDbEntityGatewayTests.cs" />
+  </ItemGroup>
+    
+  <ItemGroup>
     <Folder Include="Factories\" />
   </ItemGroup>
 </Project>

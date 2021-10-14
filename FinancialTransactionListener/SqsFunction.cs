@@ -13,6 +13,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Threading.Tasks;
+using FinancialTransactionListener.Infrastructure;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
@@ -42,10 +43,10 @@ namespace FinancialTransactionListener
             services.ConfigureDynamoDB();
 
             services.AddHttpClient();
-            services.AddScoped<IDoSomethingUseCase, DoSomethingUseCase>();
+            services.AddScoped<IIndexTransactionUseCase, IndexTransactionUseCase>();
 
-            services.AddScoped<IDbEntityGateway, DynamoDbEntityGateway>();
-
+            services.AddScoped<ITransactionApiGateway, TransactionApiGateway>();
+            services.ConfigureElasticSearch(Configuration);
             base.ConfigureServices(services);
         }
 
@@ -77,33 +78,37 @@ namespace FinancialTransactionListener
         {
             context.Logger.LogLine($"Processing message {message.MessageId}");
 
-            var entityEvent = JsonSerializer.Deserialize<EntityEventSns>(message.Body, _jsonOptions);
+            var entityEvent = JsonSerializer.Deserialize<EntityEventSns>(message.Body, JsonOptions);
 
-            using (Logger.BeginScope("CorrelationId: {CorrelationId}", entityEvent.CorrelationId))
-            {
-                try
+            if (entityEvent != null)
+                using (Logger.BeginScope("CorrelationId: {CorrelationId}", entityEvent.CorrelationId))
                 {
-                    IMessageProcessing processor = null;
-                    switch (entityEvent.EventType)
+                    try
                     {
-                        case EventTypes.DoSomethingEvent:
+                        IMessageProcessing processor = null;
+                        switch (entityEvent.EventType)
+                        {
+                            case EventTypes.TransactionCreatedEvent:
+                            case EventTypes.TransactionUpdatedEvent:
                             {
-                                processor = ServiceProvider.GetService<IDoSomethingUseCase>();
+                                processor = ServiceProvider.GetService<IIndexTransactionUseCase>();
                                 break;
                             }
-                        // TODO - Implement other message types here...
-                        default:
-                            throw new ArgumentException($"Unknown event type: {entityEvent.EventType} on message id: {message.MessageId}");
-                    }
+                            // TODO - Implement other message types here...
+                            default:
+                                throw new ArgumentException(
+                                    $"Unknown event type: {entityEvent.EventType} on message id: {message.MessageId}");
+                        }
 
-                    await processor.ProcessMessageAsync(entityEvent).ConfigureAwait(false);
+                        if (processor != null) await processor.ProcessMessageAsync(entityEvent).ConfigureAwait(false);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.LogError(ex,
+                            $"Exception processing message id: {message.MessageId}; type: {entityEvent.EventType}; entity id: {entityEvent.EntityId}");
+                        throw; // AWS will handle retry/moving to the dead letter queue
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Logger.LogError(ex, $"Exception processing message id: {message.MessageId}; type: {entityEvent.EventType}; entity id: {entityEvent.EntityId}");
-                    throw; // AWS will handle retry/moving to the dead letter queue
-                }
-            }
         }
     }
 }

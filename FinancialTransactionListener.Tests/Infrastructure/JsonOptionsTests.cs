@@ -1,10 +1,10 @@
-using FinancialTransactionListener.Infrastructure;
 using FluentAssertions;
+using FinancialTransactionListener.V1.Infrastructure;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Xunit;
 
-namespace FinancialTransactionListener.Tests.Infrastructure
+namespace FinancialTransactionListener.Tests.V1.Infrastructure
 {
     public class JsonOptionsTests
     {

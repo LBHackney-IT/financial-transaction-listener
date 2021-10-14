@@ -11,6 +11,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
 using System.Text.Json;
+using FinancialTransactionListener.V1.Infrastructure;
 
 namespace FinancialTransactionListener
 {
@@ -22,7 +23,7 @@ namespace FinancialTransactionListener
     [ExcludeFromCodeCoverage]
     public abstract class BaseFunction
     {
-        protected readonly static JsonSerializerOptions _jsonOptions = JsonOptions.CreateJsonOptions();
+        protected static readonly JsonSerializerOptions JsonOptions = V1.Infrastructure.JsonOptions.CreateJsonOptions();
 
         protected IConfigurationRoot Configuration { get; }
         protected IServiceProvider ServiceProvider { get; }
