@@ -4,19 +4,19 @@ setup:
 
 .PHONY: build
 build:
-	docker-compose build base-listener
+	docker-compose build financial-transaction-listener
 
 .PHONY: serve
 serve:
-	docker-compose build base-listener && docker-compose up base-listener
+	docker-compose build financial-transaction-listener && docker-compose up financial-transaction-listener
 
 .PHONY: shell
 shell:
-	docker-compose run base-listener bash
+	docker-compose run financial-transaction-listener bash
 
 .PHONY: test
 test:
-	docker-compose up dynamodb-database & docker-compose build base-listener-test && docker-compose up base-listener-test
+	docker-compose up dynamodb-database & docker-compose build financial-transaction-listener-test && docker-compose up financial-transaction-listener-test
 
 .PHONY: lint
 lint:

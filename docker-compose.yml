@@ -1,11 +1,11 @@
 version: "3.2"
 
 services:
-  base-listener:
-    image: base-listener
+  financial-transaction-listener:
+    image: financial-transaction-listener
     build:
       context: .
-      dockerfile: BaseListener/Dockerfile
+      dockerfile: FinancialTransactionListener/Dockerfile
       args:
         - LBHPACKAGESTOKEN=${LBHPACKAGESTOKEN}
     ports:
@@ -21,11 +21,11 @@ services:
     links:
       - dynamodb-database
 
-  base-listener-test:
-    image: base-listener-test
+  financial-transaction-listener-test:
+    image: financial-transaction-listener-test
     build:
       context: .
-      dockerfile: BaseListener.Tests/Dockerfile
+      dockerfile: FinancialTransactionListener.Tests/Dockerfile
       args:
         - LBHPACKAGESTOKEN=${LBHPACKAGESTOKEN}
     environment:
