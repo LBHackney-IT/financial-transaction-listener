@@ -54,4 +54,10 @@
   <ItemGroup>
     <Folder Include="Factories\" />
   </ItemGroup>
+    
+  <ItemGroup>
+    <None Update="data\indexes\transactions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

@@ -10,7 +10,7 @@ namespace FinancialTransactionListener.Infrastructure.Exceptions
         public string ResponseBody { get; }
 
         public GetTransactionException(Guid id, HttpStatusCode statusCode, string responseBody)
-            : base($"Failed to get person details for id {id}. Status code: {statusCode}; Message: {responseBody}")
+            : base($"Failed to get transaction details for id {id}. Status code: {statusCode}; Message: {responseBody}")
         {
             TransactionId = id;
             StatusCode = statusCode;

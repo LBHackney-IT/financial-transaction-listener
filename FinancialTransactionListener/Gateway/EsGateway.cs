@@ -29,8 +29,9 @@ namespace FinancialTransactionListener.Gateway
             {
                 throw new ArgumentNullException(nameof(transaction));
             }
+            var  response = await ESIndex(transaction, IndexNameTransactions);
 
-            return await ESIndex(transaction, IndexNameTransactions);
+            return response;
         }
 
         

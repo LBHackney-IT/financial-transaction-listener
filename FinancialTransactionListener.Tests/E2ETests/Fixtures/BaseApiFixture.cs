@@ -9,7 +9,7 @@ using FinancialTransactionListener.V1.Infrastructure;
 
 namespace FinancialTransactionListener.Tests.E2ETests.Fixtures
 {
-    public abstract class BaseApiFixture<T> where T : class
+    public abstract class BaseApiFixture<T> : IDisposable where T : class
     {
         protected readonly Fixture Fixture = new Fixture();
         private readonly JsonSerializerOptions _jsonOptions;
@@ -18,7 +18,7 @@ namespace FinancialTransactionListener.Tests.E2ETests.Fixtures
         protected string Route;
         protected string Token;
 
-        public static T ResponseObject { get; set; }
+        public static T ResponseObject { get; protected set; }
 
         protected BaseApiFixture()
         {
@@ -35,35 +35,38 @@ namespace FinancialTransactionListener.Tests.E2ETests.Fixtures
         protected bool Disposed;
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposing || Disposed) return;
-            if (_httpListener.IsListening)
-                _httpListener.Stop();
+            if (disposing && !Disposed)
+            {
+                if (_httpListener.IsListening)
+                    _httpListener.Stop();
 
-            Disposed = true;
+                Disposed = true;
+            }
         }
 
         protected virtual void StartApiStub()
         {
-            // GetContext method blocks while waiting for a request. 
-            var context = _httpListener.GetContext();
-            var response = context.Response;
             Task.Run(() =>
             {
                 _httpListener = new HttpListener();
                 _httpListener.Prefixes.Add(Route);
                 _httpListener.Start();
 
-              
-
-                if (context.Request.Headers["Authorization"] != Token)
+                // GetContext method blocks while waiting for a request. 
+                var context = _httpListener.GetContext();
+                var response = context.Response;
+                //if (context.Request.Headers["Authorization"] != Token)
+                //{
+                //    response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                //}
+                if (context.Request.Headers["x-api-key"] != Token)
                 {
-                    response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    response.StatusCode = (int) HttpStatusCode.Unauthorized;
                 }
                 else
                 {
                     response.StatusCode = (int)((ResponseObject is null) ? HttpStatusCode.NotFound : HttpStatusCode.OK);
-                    var responseBody = string.Empty;
-                    responseBody = ResponseObject is null ? context.Request.Url.Segments.Last() : JsonSerializer.Serialize(ResponseObject, _jsonOptions);
+                    var responseBody = ResponseObject is null ? context.Request.Url.Segments.Last() : JsonSerializer.Serialize(ResponseObject, _jsonOptions);
                     var stream = response.OutputStream;
                     using var writer = new StreamWriter(stream);
                     writer.Write(responseBody);

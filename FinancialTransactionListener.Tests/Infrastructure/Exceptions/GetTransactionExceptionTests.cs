@@ -9,7 +9,7 @@ namespace FinancialTransactionListener.Tests.Infrastructure.Exceptions
     public class GetTransactionExceptionTests
     {
         [Fact]
-        public void GetPersonExceptionConstructorTest()
+        public void GetTransactionExceptionConstructorTest()
         {
             var transactionId = Guid.NewGuid();
             const HttpStatusCode statusCode = HttpStatusCode.OK;

@@ -7,8 +7,8 @@ using Xunit;
 namespace FinancialTransactionListener.Tests.E2ETests.Stories
 {
     [Story(
-        AsA = "SQS Tenure Listener",
-        IWant = "a function to process the Transaction created and updated messages",
+        AsA = "SQS Transaction Listener",
+        IWant = "a function to process the transaction created and updated messages",
         SoThat = "The Transaction details are set in the index")]
     [Collection("ElasticSearch collection")]
     public sealed class AddTransactionToIndexTests : IDisposable

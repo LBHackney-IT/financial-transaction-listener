@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FinancialTransactionListener.V1.Infrastructure
+namespace FinancialTransactionListener.Infrastructure
 {
     public static class RetryService
     {
@@ -25,7 +25,7 @@ namespace FinancialTransactionListener.V1.Infrastructure
 
             var exceptions = new List<Exception>();
 
-            for (int attempted = 0; attempted < maxAttemptCount; attempted++)
+            for (var attempted = 0; attempted < maxAttemptCount; attempted++)
             {
                 try
                 {

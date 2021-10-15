@@ -12,6 +12,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
     <NoWarn>$(NoWarn);CA1062;CA2214;CS1591;S1699;S3442;CA2000;S3925;CA1032;CA1031;S4457</NoWarn>
+    <UserSecretsId>4e32450f-7ea9-40fd-a000-1420382f0c40</UserSecretsId>
   </PropertyGroup>
     
   <ItemGroup>
@@ -41,4 +42,5 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+
 </Project>

@@ -58,7 +58,6 @@ namespace FinancialTransactionListener.Tests.Gateway
         private Transaction CreateTransaction()
         {
             return _fixture.Build<Transaction>()
-                           .With(x => x.TransactionDate, Convert.ToDateTime(DateTime.UtcNow.AddYears(-30).ToString(CultureInfo.InvariantCulture)))
                            .Create();
         }
 
@@ -91,18 +90,18 @@ namespace FinancialTransactionListener.Tests.Gateway
         public async Task IndexTransactionTestCallsEsClient()
         {
             var sut = new EsGateway(_testFixture.ElasticSearchClient);
-            var person = CreateTransaction();
-            var response = await sut.IndexTransaction(person).ConfigureAwait(false);
+            var transaction = CreateTransaction();
+            var response = await sut.IndexTransaction(transaction).ConfigureAwait(false);
 
             response.Should().NotBeNull();
             response.Result.Should().Be(Result.Created);
 
             var result = await _testFixture.ElasticSearchClient
-                                           .GetAsync<Transaction>(person.Id, g => g.Index("transactions"))
+                                           .GetAsync<Transaction>(transaction.Id, g => g.Index("transactions"))
                                            .ConfigureAwait(false);
-            result.Source.Should().BeEquivalentTo(person);
+            result.Source.Should().BeEquivalentTo(transaction);
 
-            _cleanup.Add(async () => await _testFixture.ElasticSearchClient.DeleteAsync(new DeleteRequest("transactions", person.Id))
+            _cleanup.Add(async () => await _testFixture.ElasticSearchClient.DeleteAsync(new DeleteRequest("transactions", transaction.Id))
                                                                            .ConfigureAwait(false));
         }
 

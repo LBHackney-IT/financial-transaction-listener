@@ -1,11 +1,11 @@
-using FluentAssertions;
-using FinancialTransactionListener.V1.Infrastructure;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using FinancialTransactionListener.Infrastructure;
+using FluentAssertions;
 using Xunit;
 
-namespace FinancialTransactionListener.Tests.V1.Infrastructure
+namespace FinancialTransactionListener.Tests.Infrastructure
 {
     public class RetryServiceTests
     {
@@ -27,7 +27,7 @@ namespace FinancialTransactionListener.Tests.V1.Infrastructure
         }
 
         [Fact]
-        public void DoAsyncWithNoneAttemptsShouldthrowsAggregateException()
+        public void DoAsyncWithNoneAttemptsShouldThrowsAggregateException()
         {
             Func<Task> action = async () => await RetryService.DoAsync(CreateTask(), maxAttemptCount: 0, delay: TimeSpan.FromSeconds(2));
 
@@ -47,7 +47,7 @@ namespace FinancialTransactionListener.Tests.V1.Infrastructure
             result.Should().Be("Task result.");
         }
 
-        private Task<string> CreateTask()
+        private static Task<string> CreateTask()
         {
             return Task.FromResult("Task result.");
         }

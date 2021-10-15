@@ -39,7 +39,7 @@ namespace FinancialTransactionListener.Tests.E2ETests.Steps
                            .Create();
         }
 
-        public async Task WhenTheFunctionIsTriggered(Guid personId, string eventType)
+        public async Task WhenTheFunctionIsTriggered(Guid transactionId, string eventType)
         {
             var mockLambdaLogger = new Mock<ILambdaLogger>();
             ILambdaContext lambdaContext = new TestLambdaContext()
@@ -48,7 +48,7 @@ namespace FinancialTransactionListener.Tests.E2ETests.Steps
             };
 
             var sqsEvent = _fixture.Build<SQSEvent>()
-                                   .With(x => x.Records, new List<SQSEvent.SQSMessage> { CreateMessage(personId, eventType) })
+                                   .With(x => x.Records, new List<SQSEvent.SQSMessage> { CreateMessage(transactionId, eventType) })
                                    .Create();
 
             async Task Func()
@@ -63,19 +63,19 @@ namespace FinancialTransactionListener.Tests.E2ETests.Steps
         public void ThenATransactionNotFoundExceptionIsThrown(Guid id)
         {
             _lastException.Should().NotBeNull();
-            _lastException.Should().BeOfType(typeof(EntityNotFoundException<Person>));
-            (_lastException as EntityNotFoundException<Person>)?.Id.Should().Be(id);
+            _lastException.Should().BeOfType(typeof(EntityNotFoundException<Transaction>));
+            (_lastException as EntityNotFoundException<Transaction>)?.Id.Should().Be(id);
         }
         public async Task ThenTheIndexIsCreatedWithTheTransaction(
             Transaction transaction, IElasticClient esClient)
         {
-            var result = await esClient.GetAsync<Transaction>(transaction.Id, g => g.Index("transaction"))
+            var result = await esClient.GetAsync<Transaction>(transaction.Id, g => g.Index("transactions"))
                 .ConfigureAwait(false);
 
             var transactionInIndex = result.Source;
             transactionInIndex.Should().BeEquivalentTo(transaction);
 
-            _cleanup.Add(async () => await esClient.DeleteAsync(new DeleteRequest("transaction", transactionInIndex.Id))
+            _cleanup.Add(async () => await esClient.DeleteAsync(new DeleteRequest("transactions", transactionInIndex.Id))
                 .ConfigureAwait(false));
         }
 

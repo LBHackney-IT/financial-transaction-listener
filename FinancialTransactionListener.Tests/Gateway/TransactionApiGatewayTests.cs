@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
@@ -48,12 +49,16 @@ namespace FinancialTransactionListener.Tests.Gateway
             _sut = new TransactionApiGateway(_mockHttpClientFactory.Object, _configuration);
         }
 
-        private static string Route(Guid id) => $"{TransactionApiRoute}Transactions/{id}";
+        private static string Route(Guid id) => $"{TransactionApiRoute}transactions/{id}";
 
         private static bool ValidateRequest(string expectedRoute, HttpRequestMessage request)
         {
+           
+            request.Headers.TryGetValues("x-api-key", out var apiKeyHeaderValues);
             return (request.RequestUri.ToString() == expectedRoute)
-                && (request.Headers.Authorization.ToString() == TransactionApiToken);
+                   && (apiKeyHeaderValues.First() == TransactionApiToken);
+            //return (request.RequestUri.ToString() == expectedRoute)
+            //    && (request.Headers.Authorization.ToString() == TransactionApiToken);
         }
 
         private void SetupHttpClientResponse(string route, Transaction response)

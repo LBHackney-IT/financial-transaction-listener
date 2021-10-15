@@ -110,17 +110,10 @@ namespace FinancialTransactionListener.Tests
         {
             // Nothing to do here
         }
-        public void GivenATenureIsNotIndexed(object tenure)
-        {
-            // Nothing to do here
-        }
+      
 
         public async Task GivenATransactionIsIndexedWithDifferentInfo(Transaction transaction)
         {
-            //var esPerson = _esEntityFactory.CreatePerson(person);
-            //esPerson.Firstname = "Old";
-            //esPerson.Surname = "Macdonald";
-            //esPerson.Tenures = new List<ESPersonTenure>();
             var request = new IndexRequest<Transaction>(transaction, _indexNameTransactions);
             await ElasticSearchClient.IndexAsync(request).ConfigureAwait(false);
         }

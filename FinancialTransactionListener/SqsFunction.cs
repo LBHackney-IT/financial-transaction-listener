@@ -46,6 +46,7 @@ namespace FinancialTransactionListener
             services.AddScoped<IIndexTransactionUseCase, IndexTransactionUseCase>();
 
             services.AddScoped<ITransactionApiGateway, TransactionApiGateway>();
+            services.AddScoped<IEsGateway, EsGateway>();
             services.ConfigureElasticSearch(Configuration);
             base.ConfigureServices(services);
         }
@@ -85,7 +86,7 @@ namespace FinancialTransactionListener
                 {
                     try
                     {
-                        IMessageProcessing processor = null;
+                        IMessageProcessing processor;
                         switch (entityEvent.EventType)
                         {
                             case EventTypes.TransactionCreatedEvent:
