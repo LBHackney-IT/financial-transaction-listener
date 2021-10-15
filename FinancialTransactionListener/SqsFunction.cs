@@ -91,10 +91,10 @@ namespace FinancialTransactionListener
                         {
                             case EventTypes.TransactionCreatedEvent:
                             case EventTypes.TransactionUpdatedEvent:
-                            {
-                                processor = ServiceProvider.GetService<IIndexTransactionUseCase>();
-                                break;
-                            }
+                                {
+                                    processor = ServiceProvider.GetService<IIndexTransactionUseCase>();
+                                    break;
+                                }
                             // TODO - Implement other message types here...
                             default:
                                 throw new ArgumentException(
