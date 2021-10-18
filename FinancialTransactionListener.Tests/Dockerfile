@@ -12,7 +12,7 @@ WORKDIR /app
 COPY ./FinancialTransactionListener.sln ./
 COPY ./FinancialTransactionListener/FinancialTransactionListener.csproj ./FinancialTransactionListener/
 COPY ./FinancialTransactionListener.Tests/FinancialTransactionListener.Tests.csproj ./FinancialTransactionListener.Tests/
-COPY /NuGet.Config /root/.nuget/NuGet/NuGet.Config
+# COPY /NuGet.Config /root/.nuget/NuGet/NuGet.Config
 
 RUN dotnet restore ./FinancialTransactionListener/FinancialTransactionListener.csproj
 RUN dotnet restore ./FinancialTransactionListener.Tests/FinancialTransactionListener.Tests.csproj
