@@ -94,7 +94,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install dotnet format
+          name: Install dotnet format -g dotnet-format --version 3.0.4
           command: dotnet tool install dotnet-format --tool-path ./dotnet-format-local/
       - run:
           name: Run formatter check
@@ -167,6 +167,7 @@ workflows:
       - assume-role-development:
           context: api-assume-role-housing-development-context
           requires:
+            - check-code-formatting
             - build-and-test
           filters:
             branches:
@@ -178,7 +179,6 @@ workflows:
             branches:
               only: master
       - deploy-to-development:
-          context: api-assume-role-housing-development-context
           requires:
             - terraform-init-and-apply-to-development
           filters:
