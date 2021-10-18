@@ -4,3 +4,4 @@
 
 /FinancialTransactionListener/obj/Release/netcoreapp3.1
 /.vs
+/FinancialTransactionListener.Tests/obj
