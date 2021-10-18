@@ -6,7 +6,6 @@ WORKDIR /app
 
 # Copy csproj and NUGet.Config and restore as distinct layers
 COPY ./FinancialTransactionListener/FinancialTransactionListener.csproj ./
-# COPY /NuGet.Config /root/.nuget/NuGet/NuGet.Config
 RUN dotnet restore ./FinancialTransactionListener.csproj
 
 
