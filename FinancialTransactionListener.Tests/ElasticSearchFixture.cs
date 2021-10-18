@@ -110,7 +110,7 @@ namespace FinancialTransactionListener.Tests
         {
             // Nothing to do here
         }
-      
+
 
         public async Task GivenATransactionIsIndexedWithDifferentInfo(Transaction transaction)
         {

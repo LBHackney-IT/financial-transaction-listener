@@ -61,9 +61,9 @@ namespace FinancialTransactionListener.Tests.Gateway
                            .Create();
         }
 
-      
 
-     
+
+
 
         [Fact]
         public void IndexPersonTestNullPersonThrows()
@@ -106,6 +106,6 @@ namespace FinancialTransactionListener.Tests.Gateway
         }
 
 
-       
+
     }
 }

@@ -53,7 +53,7 @@ namespace FinancialTransactionListener.Tests.Gateway
 
         private static bool ValidateRequest(string expectedRoute, HttpRequestMessage request)
         {
-           
+
             request.Headers.TryGetValues("x-api-key", out var apiKeyHeaderValues);
             return (request.RequestUri.ToString() == expectedRoute)
                    && (apiKeyHeaderValues.First() == TransactionApiToken);

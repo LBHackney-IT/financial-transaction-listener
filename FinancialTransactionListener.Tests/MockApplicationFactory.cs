@@ -7,7 +7,7 @@ using Nest;
 
 namespace FinancialTransactionListener.Tests
 {
-    
+
 
     public class MockApplicationFactory
     {

@@ -47,7 +47,7 @@ namespace FinancialTransactionListener.Tests.UseCase
 
         private Transaction CreateTransaction(Guid entityId)
         {
-            
+
             return _fixture.Build<Transaction>()
                            .With(x => x.Id, entityId)
                            .Create();
@@ -82,7 +82,7 @@ namespace FinancialTransactionListener.Tests.UseCase
         public void ProcessMessageAsyncTestGetTransactionReturnsNullThrows()
         {
             _mockTransactionApi.Setup(x => x.GetTransactionByIdAsync(_message.EntityId))
-                                       .ReturnsAsync((Transaction)null);
+                                       .ReturnsAsync((Transaction) null);
 
             Func<Task> func = async () => await _sut.ProcessMessageAsync(_message).ConfigureAwait(false);
             func.Should().ThrowAsync<EntityNotFoundException<Transaction>>();

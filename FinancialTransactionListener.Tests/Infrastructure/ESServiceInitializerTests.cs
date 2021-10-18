@@ -36,7 +36,7 @@ namespace FinancialTransactionListener.Tests.V1.Infrastructure
         [Fact]
         public void ConfigureElasticSearchTestNullServicesThrows()
         {
-            Action act = () => ESServiceInitializer.ConfigureElasticSearch((IServiceCollection)null, _mockConfiguration.Object);
+            Action act = () => ESServiceInitializer.ConfigureElasticSearch((IServiceCollection) null, _mockConfiguration.Object);
             act.Should().Throw<ArgumentNullException>();
         }
 

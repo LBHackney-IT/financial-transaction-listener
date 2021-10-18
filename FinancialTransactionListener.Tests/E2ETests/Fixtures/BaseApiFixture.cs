@@ -65,7 +65,7 @@ namespace FinancialTransactionListener.Tests.E2ETests.Fixtures
                 }
                 else
                 {
-                    response.StatusCode = (int)((ResponseObject is null) ? HttpStatusCode.NotFound : HttpStatusCode.OK);
+                    response.StatusCode = (int) ((ResponseObject is null) ? HttpStatusCode.NotFound : HttpStatusCode.OK);
                     var responseBody = ResponseObject is null ? context.Request.Url.Segments.Last() : JsonSerializer.Serialize(ResponseObject, _jsonOptions);
                     var stream = response.OutputStream;
                     using var writer = new StreamWriter(stream);
