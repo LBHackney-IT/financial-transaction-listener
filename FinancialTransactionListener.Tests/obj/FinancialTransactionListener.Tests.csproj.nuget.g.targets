@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+  <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)xunit.core\2.4.1\build\xunit.core.targets" Condition="Exists('$(NuGetPackageRoot)xunit.core\2.4.1\build\xunit.core.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.codecoverage\16.11.0\build\netstandard1.0\Microsoft.CodeCoverage.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.codecoverage\16.11.0\build\netstandard1.0\Microsoft.CodeCoverage.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.net.test.sdk\16.11.0\build\netcoreapp2.1\Microsoft.NET.Test.Sdk.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.net.test.sdk\16.11.0\build\netcoreapp2.1\Microsoft.NET.Test.Sdk.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.codeanalysis.netanalyzers\5.0.3\build\Microsoft.CodeAnalysis.NetAnalyzers.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.codeanalysis.netanalyzers\5.0.3\build\Microsoft.CodeAnalysis.NetAnalyzers.targets')" />
+    <Import Project="$(NuGetPackageRoot)aspectinjector\2.5.0\buildTransitive\netstandard2.0\AspectInjector.targets" Condition="Exists('$(NuGetPackageRoot)aspectinjector\2.5.0\buildTransitive\netstandard2.0\AspectInjector.targets')" />
+    <Import Project="$(NuGetPackageRoot)coverlet.msbuild\3.1.0\build\coverlet.msbuild.targets" Condition="Exists('$(NuGetPackageRoot)coverlet.msbuild\3.1.0\build\coverlet.msbuild.targets')" />
+  </ImportGroup>
+</Project>
