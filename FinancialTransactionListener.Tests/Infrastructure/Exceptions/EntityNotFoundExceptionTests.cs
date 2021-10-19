@@ -1,8 +1,7 @@
+using System;
 using FinancialTransactionListener.Infrastructure.Exceptions;
 using FluentAssertions;
-using System;
 using Xunit;
-
 
 namespace FinancialTransactionListener.Tests.Infrastructure.Exceptions
 {
@@ -16,7 +15,7 @@ namespace FinancialTransactionListener.Tests.Infrastructure.Exceptions
             var ex = new EntityNotFoundException<SomeEntity>(id);
             ex.Id.Should().Be(id);
 
-            var typeName = typeof(SomeEntity).Name;
+            var typeName = nameof(SomeEntity);
             ex.EntityName.Should().Be(typeName);
             ex.Message.Should().Be($"{typeName} with id {id} not found.");
         }

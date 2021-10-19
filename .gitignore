@@ -59,8 +59,10 @@ bin/
 .idea/
 tmp/
 .vs/
+./Properties/launchSettings.json
 
 .fake
 .ionide
 
 testresults/
+ 
