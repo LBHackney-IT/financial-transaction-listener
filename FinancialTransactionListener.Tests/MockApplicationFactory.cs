@@ -1,5 +1,4 @@
 using FinancialTransactionListener.Infrastructure;
-using Hackney.Core.DynamoDb;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,7 +21,7 @@ namespace FinancialTransactionListener.Tests
             {
                 services.AddSingleton<IConfiguration>(hostContext.Configuration);
                 services.ConfigureElasticSearch(hostContext.Configuration);
-                services.ConfigureDynamoDB();
+                // services.ConfigureDynamoDB();
                 var serviceProvider = services.BuildServiceProvider();
                 ElasticSearchClient = serviceProvider.GetRequiredService<IElasticClient>();
             });
