@@ -47,7 +47,7 @@ namespace FinancialTransactionListener
                 AWSXRayRecorder.Instance.ContextMissingStrategy = ContextMissingStrategy.LOG_ERROR;
 
             ServiceProvider = services.BuildServiceProvider();
-           // ServiceProvider.UseLogCall();
+            // ServiceProvider.UseLogCall();
 
             Logger = ServiceProvider.GetRequiredService<ILogger<BaseFunction>>();
         }

@@ -21,7 +21,7 @@ namespace FinancialTransactionListener.Tests
             {
                 services.AddSingleton<IConfiguration>(hostContext.Configuration);
                 services.ConfigureElasticSearch(hostContext.Configuration);
-               // services.ConfigureDynamoDB();
+                // services.ConfigureDynamoDB();
                 var serviceProvider = services.BuildServiceProvider();
                 ElasticSearchClient = serviceProvider.GetRequiredService<IElasticClient>();
             });

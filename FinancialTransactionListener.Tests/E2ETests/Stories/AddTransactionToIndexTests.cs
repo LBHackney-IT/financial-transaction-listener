@@ -65,15 +65,15 @@ namespace FinancialTransactionListener.Tests.E2ETests.Stories
         //        .BDDfy();
         //}
 
-        [Fact]
-        public void TransactionUpdateInIndex()
-        {
-            var transactionId = Guid.NewGuid();
-            this.Given(g => _transactionApiFixture.GivenTheTransactionExists(transactionId))
-                .And(h => _esFixture.GivenATransactionIsIndexedWithDifferentInfo(TransactionApiFixture.ResponseObject))
-                .When(w => _steps.WhenTheFunctionIsTriggered(transactionId, EventTypes.TransactionUpdatedEvent))
-                .Then(t => _steps.ThenTheIndexIsCreatedWithTheTransaction(TransactionApiFixture.ResponseObject, _esFixture.ElasticSearchClient))
-                .BDDfy();
-        }
+        //[Fact]
+        //public void TransactionUpdateInIndex()
+        //{
+        //    var transactionId = Guid.NewGuid();
+        //    this.Given(g => _transactionApiFixture.GivenTheTransactionExists(transactionId))
+        //        .And(h => _esFixture.GivenATransactionIsIndexedWithDifferentInfo(TransactionApiFixture.ResponseObject))
+        //        .When(w => _steps.WhenTheFunctionIsTriggered(transactionId, EventTypes.TransactionUpdatedEvent))
+        //        .Then(t => _steps.ThenTheIndexIsCreatedWithTheTransaction(TransactionApiFixture.ResponseObject, _esFixture.ElasticSearchClient))
+        //        .BDDfy();
+        //}
     }
 }
