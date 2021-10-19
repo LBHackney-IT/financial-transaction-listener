@@ -1,4 +1,3 @@
-using Amazon.DynamoDBv2.DataModel;
 using AutoFixture;
 using FinancialTransactionListener.Infrastructure;
 using System;

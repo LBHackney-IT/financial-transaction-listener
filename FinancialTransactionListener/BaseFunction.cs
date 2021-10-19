@@ -1,8 +1,6 @@
 using Amazon.XRay.Recorder.Core;
 using Amazon.XRay.Recorder.Core.Strategies;
 using Amazon.XRay.Recorder.Handlers.AwsSdk;
-using FinancialTransactionListener.Infrastructure;
-using Hackney.Core.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -11,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
 using System.Text.Json;
-using FinancialTransactionListener.V1.Infrastructure;
 
 namespace FinancialTransactionListener
 {
@@ -40,8 +37,8 @@ namespace FinancialTransactionListener
             Configuration = builder.Build();
             services.AddSingleton<IConfiguration>(Configuration);
 
-            services.ConfigureLambdaLogging(Configuration);
-            services.AddLogCallAspect();
+            //services.ConfigureLambdaLogging(Configuration);
+            //services.AddLogCallAspect();
 
             ConfigureServices(services);
 
@@ -50,7 +47,7 @@ namespace FinancialTransactionListener
                 AWSXRayRecorder.Instance.ContextMissingStrategy = ContextMissingStrategy.LOG_ERROR;
 
             ServiceProvider = services.BuildServiceProvider();
-            ServiceProvider.UseLogCall();
+           // ServiceProvider.UseLogCall();
 
             Logger = ServiceProvider.GetRequiredService<ILogger<BaseFunction>>();
         }
@@ -80,7 +77,7 @@ namespace FinancialTransactionListener
         /// <param name="services"></param>
         protected virtual void ConfigureServices(IServiceCollection services)
         {
-            services.AddLogCallAspect();
+            //services.AddLogCallAspect();
         }
     }
 }
