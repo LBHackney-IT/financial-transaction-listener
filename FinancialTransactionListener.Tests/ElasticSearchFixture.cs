@@ -29,7 +29,7 @@ namespace FinancialTransactionListener.Tests
         {
             EnsureEnvVarConfigured("ELASTICSEARCH_DOMAIN_URL", "http://localhost:9200");
 
-            EnsureEnvVarConfigured("PersonApiUrl", FixtureConstants.TransactionApiRoute);
+            EnsureEnvVarConfigured("PersonApiUrl1", FixtureConstants.TransactionApiRoute);
             EnsureEnvVarConfigured("PersonApiToken", FixtureConstants.TransactionApiToken);
 
             _factory = new MockApplicationFactory();
