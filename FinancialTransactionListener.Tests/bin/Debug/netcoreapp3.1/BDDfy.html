@@ -9,7 +9,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
 /*If you drop a custom stylesheet named BDDfyCustom.css in your output folder it gets embedded here. This way you can apply some custom styles over your html report.*/
 
     </style>
-    <title>BDDfy Test Result 19/10/2021</title>
+    <title>BDDfy Test Result 20/10/2021</title>
   </head>
   <body>
     <div id='main'>
@@ -29,13 +29,13 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
           <li class='scenarioSummary'>
             <div class='summaryLine'>
               <div class='summaryLabel'>Scenarios</div>
-              <span class='summaryCount'>1</span>
+              <span class='summaryCount'>4</span>
             </div>
           </li>
           <li class='Passed'>
             <div class='summaryLine'>
               <div class='summaryLabel'>Passed</div>
-              <span class='summaryCount'>1</span>
+              <span class='summaryCount'>4</span>
             </div>
           </li>
           <li class='Inconclusive'>
@@ -79,18 +79,63 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
               </div>
               <div class='scenarios'>
                 <div class='scenario'>
-                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-1'>Transaction update in index</div>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-3'>Transaction created added to index</div>
+                  <ul class='steps' id='scenario-3'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-3-1' >
+                      <span>Given the transaction exists dd3b82fb-ec73-4bde-a263-82187383c728</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-3-2' >
+                      <span>And given a transaction is not indexed 'null'</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-3-3' >
+                      <span>When the function is triggered dd3b82fb-ec73-4bde-a263-82187383c728, TransactionCreatedEvent</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-3-4' >
+                      <span>Then the index is created with the transaction 'null', Nest.ElasticClient</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-1'>Transaction not found</div>
                   <ul class='steps' id='scenario-1'>
                     <li class='step Passed  SetupState ' data-toggle-target='step-1-1' >
-                      <span>Given the transaction exists 2db5f9b1-cbfd-4215-bdb9-00483d0e946b</span>
+                      <span>Given the transaction does not exist 5a06beb5-6563-4c5c-94e4-3f9d442141fd</span>
                     </li>
-                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-1-2' >
+                    <li class='step Passed  Transition ' data-toggle-target='step-1-2' >
+                      <span>When the function is triggered 5a06beb5-6563-4c5c-94e4-3f9d442141fd, TransactionCreatedEvent</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-1-3' >
+                      <span>Then a transaction not found exception is thrown 5a06beb5-6563-4c5c-94e4-3f9d442141fd</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-2'>Transaction not found</div>
+                  <ul class='steps' id='scenario-2'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-2-1' >
+                      <span>Given the transaction does not exist b2696e90-6acd-40c4-888e-8d4d49023177</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-2-2' >
+                      <span>When the function is triggered b2696e90-6acd-40c4-888e-8d4d49023177, TransactionUpdatedEvent</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-2-3' >
+                      <span>Then a transaction not found exception is thrown b2696e90-6acd-40c4-888e-8d4d49023177</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-4'>Transaction update in index</div>
+                  <ul class='steps' id='scenario-4'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-4-1' >
+                      <span>Given the transaction exists 3264842c-5b67-4847-81bd-156dcc72bb4f</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-4-2' >
                       <span>And given a transaction is indexed with different info 'null'</span>
                     </li>
-                    <li class='step Passed  Transition ' data-toggle-target='step-1-3' >
-                      <span>When the function is triggered 2db5f9b1-cbfd-4215-bdb9-00483d0e946b, TransactionUpdatedEvent</span>
+                    <li class='step Passed  Transition ' data-toggle-target='step-4-3' >
+                      <span>When the function is triggered 3264842c-5b67-4847-81bd-156dcc72bb4f, TransactionUpdatedEvent</span>
                     </li>
-                    <li class='step Passed  Assertion ' data-toggle-target='step-1-4' >
+                    <li class='step Passed  Assertion ' data-toggle-target='step-4-4' >
                       <span>Then the index is created with the transaction 'null', Nest.ElasticClient</span>
                     </li>
                   </ul>
@@ -99,7 +144,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
             </div>
           </li>
         </ul>
-        <p><span>Tested at: 19/10/2021 17:51:04</span></p>
+        <p><span>Tested at: 20/10/2021 18:01:51</span></p>
       </div>
     </div>
     <div class='footer'>Powered by <a href='https://github.com/TestStack/TestStack.BDDfy'>BDDfy</a> framework</div>

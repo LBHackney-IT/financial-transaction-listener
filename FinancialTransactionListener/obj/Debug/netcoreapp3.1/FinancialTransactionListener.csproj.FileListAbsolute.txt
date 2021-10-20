@@ -94,4 +94,3 @@ C:\Users\user\Documents\Projects\Nudge\financial-transaction-listener\FinancialT
 C:\Users\user\Documents\Projects\Nudge\financial-transaction-listener\FinancialTransactionListener\obj\Debug\netcoreapp3.1\FinancialTransactionListener.pdb
 C:\Users\user\Documents\Projects\Nudge\financial-transaction-listener\FinancialTransactionListener\obj\Debug\netcoreapp3.1\FinancialTransactionListener.genruntimeconfig.cache
 C:\Users\user\Documents\Projects\Nudge\financial-transaction-listener\FinancialTransactionListener\obj\Debug\netcoreapp3.1\FinancialTransactionListener.csproj.AssemblyReference.cache
-C:\Users\user\Documents\Projects\Nudge\financial-transaction-listener\FinancialTransactionListener\obj\Debug\netcoreapp3.1\FinancialTransactionListener.csproj.CopyComplete
