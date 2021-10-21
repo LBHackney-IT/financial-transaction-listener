@@ -44,7 +44,7 @@ namespace FinancialTransactionListener.Tests.E2ETests.Stories
 
         [Theory]
         [InlineData(EventTypes.TransactionCreatedEvent)]
-        [InlineData(EventTypes.TransactionUpdatedEvent)]
+        //[InlineData(EventTypes.TransactionUpdatedEvent)]
         public void TransactionNotFound(string eventType)
         {
             var transactionId = Guid.NewGuid();
