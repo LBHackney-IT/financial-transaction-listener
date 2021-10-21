@@ -43,11 +43,11 @@ namespace FinancialTransactionListener
             services.ConfigureDynamoDB();
 
             services.AddHttpClient();
-            services.AddScoped<IIndexTransactionUseCase, IndexTransactionUseCase>();
-
-            services.AddScoped<ITransactionApiGateway, TransactionApiGateway>();
             services.AddScoped<IEsGateway, EsGateway>();
+            services.AddScoped<ITransactionApiGateway, TransactionApiGateway>();
             services.ConfigureElasticSearch(Configuration);
+
+            services.AddScoped<IIndexTransactionUseCase, IndexTransactionUseCase>();
             base.ConfigureServices(services);
         }
 

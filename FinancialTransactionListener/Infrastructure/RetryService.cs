@@ -46,8 +46,7 @@ namespace FinancialTransactionListener.Infrastructure
             // When mistake throws then a sns message automatically
             // go to dead letter queue
             // https://aws.amazon.com/ru/blogs/compute/using-amazon-sqs-dead-letter-queues-to-replay-messages/
-            //throw new AggregateException(exceptions);
-            return default;
+            throw new AggregateException(exceptions);
         }
     }
 }
