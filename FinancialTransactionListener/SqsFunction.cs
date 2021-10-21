@@ -101,7 +101,7 @@ namespace FinancialTransactionListener
                                     $"Unknown event type: {entityEvent.EventType} on message id: {message.MessageId}");
                         }
 
-                        if (processor != null) await processor.ProcessMessageAsync(entityEvent).ConfigureAwait(false);
+                        await processor.ProcessMessageAsync(entityEvent).ConfigureAwait(false);
                     }
                     catch (Exception ex)
                     {
