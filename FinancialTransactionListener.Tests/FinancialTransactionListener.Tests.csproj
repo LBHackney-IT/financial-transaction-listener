@@ -46,13 +46,19 @@
     
   <ItemGroup>
     <Compile Remove="DynamoDbFixture.cs" />
+    <Compile Remove="E2ETests\Fixtures\EntityFixture.cs" />
     <Compile Remove="E2ETests\Steps\DoSomethingUseCaseSteps.cs" />
     <Compile Remove="E2ETests\Stories\DoSomethingTests.cs" />
+    <Compile Remove="Factories\EntityFactoryTest.cs" />
     <Compile Remove="Gateway\DynamoDbEntityGatewayTests.cs" />
+    <Compile Remove="Gateway\EsGatewayTests.cs" />
+    <Compile Remove="Gateway\TransactionApiGatewayTests.cs" />
+    <Compile Remove="LogCallAspectFixture.cs" />
   </ItemGroup>
     
   <ItemGroup>
     <Folder Include="Factories\" />
+    <Folder Include="Gateway\" />
   </ItemGroup>
     
   <ItemGroup>

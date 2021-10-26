@@ -3,17 +3,15 @@ using Amazon.Lambda.SQSEvents;
 using FinancialTransactionListener.Boundary;
 using FinancialTransactionListener.Gateway;
 using FinancialTransactionListener.Gateway.Interfaces;
+using FinancialTransactionListener.Infrastructure;
 using FinancialTransactionListener.UseCase;
 using FinancialTransactionListener.UseCase.Interfaces;
-using Hackney.Core.DynamoDb;
-using Hackney.Core.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Threading.Tasks;
-using FinancialTransactionListener.Infrastructure;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
@@ -40,7 +38,7 @@ namespace FinancialTransactionListener
         /// <param name="services"></param>
         protected override void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureDynamoDB();
+            //services.ConfigureDynamoDB();
 
             services.AddHttpClient();
             services.AddScoped<IEsGateway, EsGateway>();
