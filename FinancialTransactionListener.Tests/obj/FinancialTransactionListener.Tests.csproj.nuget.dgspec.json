@@ -20,6 +20,7 @@
         ],
         "configFilePaths": [
           "C:\\Users\\user\\Documents\\Projects\\Nudge\\financial-transaction-listener\\NuGet.Config",
+          "C:\\Users\\user\\Documents\\Projects\\Nudge\\NuGet.Config",
           "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
@@ -145,6 +146,7 @@
         ],
         "configFilePaths": [
           "C:\\Users\\user\\Documents\\Projects\\Nudge\\financial-transaction-listener\\NuGet.Config",
+          "C:\\Users\\user\\Documents\\Projects\\Nudge\\NuGet.Config",
           "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",

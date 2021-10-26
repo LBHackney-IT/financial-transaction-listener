@@ -29,7 +29,6 @@ services:
       args:
         - LBHPACKAGESTOKEN=${LBHPACKAGESTOKEN}
     environment:
-      - ENVIRONMENT=LocalDevelopment
       - ELASTICSEARCH_DOMAIN_URL=http://financial-transaction-listener-elasticsearch:9200
       # Alter if not using DynamoDb
       - DynamoDb_LocalMode=true

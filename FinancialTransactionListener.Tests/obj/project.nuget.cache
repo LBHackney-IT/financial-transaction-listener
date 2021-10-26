@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "oEuX41DjodVy3SZA7VjgCyo++CrJh+nPpGTMSGhAadObenxf6ykzyhoHz0yLM9UUwtVj8hnjHrWr1walz9cWxA==",
+  "dgSpecHash": "u9LDLdk/HAE5rpvobTYdP7YN/iqo1dLq0FyzW8xs52qBci5070MgbScYLYrNVwR/pNIojG+pHiwguhNtIBe1lA==",
   "success": true,
   "projectFilePath": "C:\\Users\\user\\Documents\\Projects\\Nudge\\financial-transaction-listener\\FinancialTransactionListener.Tests\\FinancialTransactionListener.Tests.csproj",
   "expectedPackageFiles": [
