@@ -39,7 +39,7 @@ namespace FinancialTransactionListener.Tests
             WaitForEsInstance(ElasticSearchClient);
             EnsureIndexesExist(ElasticSearchClient);
 
-            LogCallAspectFixture.SetupLogCallAspect();
+            //LogCallAspectFixture.SetupLogCallAspect();
         }
 
         public void Dispose()

@@ -3,7 +3,6 @@ using FinancialTransactionListener.Domain;
 using FinancialTransactionListener.Gateway.Interfaces;
 using FinancialTransactionListener.Infrastructure.Exceptions;
 using FinancialTransactionListener.UseCase.Interfaces;
-using Hackney.Core.Logging;
 using System;
 using System.Threading.Tasks;
 
@@ -18,7 +17,7 @@ namespace FinancialTransactionListener.UseCase
             _gateway = gateway;
         }
 
-        [LogCall]
+        //[LogCall]
         public async Task ProcessMessageAsync(EntityEventSns message)
         {
             if (message is null) throw new ArgumentNullException(nameof(message));

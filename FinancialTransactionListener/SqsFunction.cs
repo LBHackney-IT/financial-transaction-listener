@@ -3,17 +3,15 @@ using Amazon.Lambda.SQSEvents;
 using FinancialTransactionListener.Boundary;
 using FinancialTransactionListener.Gateway;
 using FinancialTransactionListener.Gateway.Interfaces;
+using FinancialTransactionListener.Infrastructure;
 using FinancialTransactionListener.UseCase;
 using FinancialTransactionListener.UseCase.Interfaces;
-using Hackney.Core.DynamoDb;
-using Hackney.Core.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Threading.Tasks;
-using FinancialTransactionListener.Infrastructure;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
@@ -40,14 +38,14 @@ namespace FinancialTransactionListener
         /// <param name="services"></param>
         protected override void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureDynamoDB();
+            //services.ConfigureDynamoDB();
 
             services.AddHttpClient();
+
             services.AddScoped<IEsGateway, EsGateway>();
             services.AddScoped<ITransactionApiGateway, TransactionApiGateway>();
-            services.ConfigureElasticSearch(Configuration);
-
             services.AddScoped<IIndexTransactionUseCase, IndexTransactionUseCase>();
+            services.ConfigureElasticSearch(Configuration);
             base.ConfigureServices(services);
         }
 
@@ -74,7 +72,7 @@ namespace FinancialTransactionListener
         /// <param name="message"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        [LogCall(LogLevel.Information)]
+       // [LogCall(LogLevel.Information)]
         private async Task ProcessMessageAsync(SQSEvent.SQSMessage message, ILambdaContext context)
         {
             context.Logger.LogLine($"Processing message {message.MessageId}");

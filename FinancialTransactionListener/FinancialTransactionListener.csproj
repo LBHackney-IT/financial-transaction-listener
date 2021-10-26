@@ -13,14 +13,19 @@
     <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
     <NoWarn>$(NoWarn);CA1062;CA2214;CS1591;S1699;S3442;CA2000;S3925;CA1032;CA1031;S4457</NoWarn>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Factories\EntityFactory.cs" />
+    <Compile Remove="Gateway\DynamoDbEntityGateway.cs" />
+    <Compile Remove="Gateway\EsGateway.cs" />
+    <Compile Remove="Gateway\TransactionApiGateway.cs" />
+    <Compile Remove="Infrastructure\DbEntity.cs" />
+  </ItemGroup>
     
   <ItemGroup>
     <PackageReference Include="Amazon.Lambda.Core" Version="2.0.0" />
     <PackageReference Include="Amazon.Lambda.Serialization.SystemTextJson" Version="2.1.0" />
     <PackageReference Include="Amazon.Lambda.SQSEvents" Version="2.0.0" />
     <PackageReference Include="AWSXRayRecorder.Handlers.AwsSdk" Version="2.8.3" />
-    <PackageReference Include="Hackney.Core.DynamoDb" Version="1.30.0" />
-    <PackageReference Include="Hackney.Core.Logging" Version="1.30.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="5.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -40,6 +45,10 @@
     <Content Include="appsettings.LocalDevelopment.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+    
+  <ItemGroup>
+    <Folder Include="Factories\" />
   </ItemGroup>
 
 </Project>
