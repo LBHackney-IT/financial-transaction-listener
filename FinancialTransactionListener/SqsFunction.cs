@@ -44,8 +44,6 @@ namespace FinancialTransactionListener
             services.AddScoped<IEsGateway, EsGateway>();
             services.AddScoped<ITransactionApiGateway, TransactionApiGateway>();
             services.ConfigureElasticSearch(Configuration);
-
-            services.AddScoped<IIndexTransactionUseCase, IndexTransactionUseCase>();
             base.ConfigureServices(services);
         }
 
