@@ -24,7 +24,7 @@ functions:
       ENVIRONMENT:  ${ssm:/housing-tl/${self:provider.stage}/aspnetcore-environment}
       ELASTICSEARCH_DOMAIN_URL: ${ssm:/housing-finance/${self:provider.stage}/elasticsearch-domain}
       TransactionApiUrl: ${ssm:/housing-finance/${self:provider.stage}/financial-transaction-api-url}
-      TransactionApiToken: ${ssm:/housing-finance/${self:provider.stage}/financialtransaction-api-token}
+      TransactionApiToken: ${ssm:/housing-finance/${self:provider.stage}/financial-transaction-api-token}
     events:
       ### Specify the parameter containing the queue arn used to trigget the lambda function here
       ### This will have been defined in the terraform configuration
