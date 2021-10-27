@@ -12,6 +12,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Hackney.Core.Logging;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
@@ -41,6 +42,7 @@ namespace FinancialTransactionListener
             //services.ConfigureDynamoDB();
 
             services.AddHttpClient();
+            services.AddScoped<IIndexTransactionUseCase, IndexTransactionUseCase>();
             services.AddScoped<IEsGateway, EsGateway>();
             services.AddScoped<ITransactionApiGateway, TransactionApiGateway>();
             services.ConfigureElasticSearch(Configuration);
