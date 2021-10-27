@@ -66,14 +66,14 @@ namespace FinancialTransactionListener.Tests.Gateway
 
 
         [Fact]
-        public void IndexPersonTestNullPersonThrows()
+        public void IndexTransactionTestNullTransactionThrows()
         {
             Func<Task<IndexResponse>> func = async () => await _sut.IndexTransaction(null).ConfigureAwait(false);
             func.Should().ThrowAsync<ArgumentNullException>();
         }
 
         [Fact]
-        public async Task IndexPersonTestCallsEsClientUsingMocks()
+        public async Task IndexTransactionTestCallsEsClientUsingMocks()
         {
             var indexResponse = _fixture.Create<IndexResponse>();
             var transaction = CreateTransaction();

@@ -16,8 +16,6 @@
   <ItemGroup>
     <Compile Remove="Factories\EntityFactory.cs" />
     <Compile Remove="Gateway\DynamoDbEntityGateway.cs" />
-    <Compile Remove="Gateway\EsGateway.cs" />
-    <Compile Remove="Gateway\TransactionApiGateway.cs" />
     <Compile Remove="Infrastructure\DbEntity.cs" />
   </ItemGroup>
     
@@ -26,6 +24,7 @@
     <PackageReference Include="Amazon.Lambda.Serialization.SystemTextJson" Version="2.1.0" />
     <PackageReference Include="Amazon.Lambda.SQSEvents" Version="2.0.0" />
     <PackageReference Include="AWSXRayRecorder.Handlers.AwsSdk" Version="2.8.3" />
+    <PackageReference Include="Hackney.Core.Logging" Version="1.49.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="5.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

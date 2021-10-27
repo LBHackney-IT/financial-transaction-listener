@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
 using System.Text.Json;
+using Hackney.Core.Logging;
 
 namespace FinancialTransactionListener
 {
@@ -37,17 +38,17 @@ namespace FinancialTransactionListener
             Configuration = builder.Build();
             services.AddSingleton<IConfiguration>(Configuration);
 
-            //services.ConfigureLambdaLogging(Configuration);
-            //services.AddLogCallAspect();
+            services.ConfigureLambdaLogging(Configuration);
+            services.AddLogCallAspect();
 
             ConfigureServices(services);
 
             // TODO - Remove if not using DynamoDb
-            if (Configuration.GetValue<bool>("DynamoDb_LocalMode"))
-                AWSXRayRecorder.Instance.ContextMissingStrategy = ContextMissingStrategy.LOG_ERROR;
+            //if (Configuration.GetValue<bool>("DynamoDb_LocalMode"))
+            //    AWSXRayRecorder.Instance.ContextMissingStrategy = ContextMissingStrategy.LOG_ERROR;
 
             ServiceProvider = services.BuildServiceProvider();
-            // ServiceProvider.UseLogCall();
+            ServiceProvider.UseLogCall();
 
             Logger = ServiceProvider.GetRequiredService<ILogger<BaseFunction>>();
         }
