@@ -6,7 +6,9 @@
       "workingDirectory": ".\\bin\\$(Configuration)\\netcoreapp3.1",
       "executablePath": "%USERPROFILE%\\.dotnet\\tools\\dotnet-lambda-test-tool-3.1.exe",
       "environmentVariables": {
-        "ENVIRONMENT": "LocalDevelopment"
+        "ENVIRONMENT": "LocalDevelopment",
+        "TransactionApiToken": "SfEnmXjrtC5O88xDXHSedaV5rPEeuDHu4pUSfOwQ",
+        "TransactionApiUrl": "https://26exrtxaid.execute-api.eu-west-2.amazonaws.com/development/api/v1"
       }
     }
   }

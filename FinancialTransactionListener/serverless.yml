@@ -22,13 +22,25 @@ functions:
     environment:
       ### Re-use the same parameter as used by web api applications
       ENVIRONMENT:  ${ssm:/housing-tl/${self:provider.stage}/aspnetcore-environment}
+      ELASTICSEARCH_DOMAIN_URL: ${ssm:/financial-transactions-api/${self:provider.stage}/elasticsearch-domain}
+      TransactionApiUrl: ${ssm:/housing-finance/${self:provider.stage}/transaction-api-url}
+      TransactionApiToken: ${ssm:/housing-finance/${self:provider.stage}/transaction-api-token}
     events:
       ### Specify the parameter containing the queue arn used to trigget the lambda function here
       ### This will have been defined in the terraform configuration
-      # - sqs: ${ssm:/sqs-queue/${self:provider.stage}/tenures/arn} 
+      - sqs: ${ssm:/sqs-queue/${self:provider.stage}/financial_transaction_listener_queue/arn} 
       
 resources:
   Resources:
+    LambdaSecurityGroup:
+      Type: AWS::EC2::SecurityGroup
+      Properties:
+        GroupName: ${self:service}-${self:provider.stage}-sg
+        GroupDescription: Allow all outbound traffic
+        SecurityGroupEgress:
+          - IpProtocol: -1
+            CidrIp: 0.0.0.0/0
+        VpcId: ${self:custom.vpcId.${opt:stage}}
     lambdaExecutionRole:
       Type: AWS::IAM::Role
       Properties:
@@ -129,14 +141,20 @@ resources:
 custom:
   vpc:
     development:
+      securityGroupIds:
+        - Ref: LambdaSecurityGroup
       subnetIds:
         - subnet-0deabb5d8fb9c3446
         - subnet-000b89c249f12a8ad
     staging:
+      securityGroupIds:
+        - Ref: LambdaSecurityGroup
       subnetIds:
         - subnet-06d3de1bd9181b0d7
         - subnet-0ed7d7713d1127656
     production:
+      securityGroupIds:
+        - Ref: LambdaSecurityGroup
       subnetIds:
         - subnet-01d3657f97a243261
         - subnet-0b7b8fea07efabf34

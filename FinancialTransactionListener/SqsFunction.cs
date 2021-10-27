@@ -12,6 +12,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Hackney.Core.Logging;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
@@ -42,9 +43,8 @@ namespace FinancialTransactionListener
 
             services.AddHttpClient();
             services.AddScoped<IIndexTransactionUseCase, IndexTransactionUseCase>();
-
-            //services.AddScoped<ITransactionApiGateway, TransactionApiGateway>();
-            //services.AddScoped<IEsGateway, EsGateway>();
+            services.AddScoped<IEsGateway, EsGateway>();
+            services.AddScoped<ITransactionApiGateway, TransactionApiGateway>();
             services.ConfigureElasticSearch(Configuration);
             base.ConfigureServices(services);
         }
@@ -72,7 +72,7 @@ namespace FinancialTransactionListener
         /// <param name="message"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-       // [LogCall(LogLevel.Information)]
+        [LogCall(LogLevel.Information)]
         private async Task ProcessMessageAsync(SQSEvent.SQSMessage message, ILambdaContext context)
         {
             context.Logger.LogLine($"Processing message {message.MessageId}");
@@ -99,7 +99,7 @@ namespace FinancialTransactionListener
                                     $"Unknown event type: {entityEvent.EventType} on message id: {message.MessageId}");
                         }
 
-                        if (processor != null) await processor.ProcessMessageAsync(entityEvent).ConfigureAwait(false);
+                        await processor.ProcessMessageAsync(entityEvent).ConfigureAwait(false);
                     }
                     catch (Exception ex)
                     {
