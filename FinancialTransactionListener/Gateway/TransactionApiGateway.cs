@@ -47,8 +47,6 @@ namespace FinancialTransactionListener.Gateway
             var getTransactionApiRoute = $"{_getTransactionApiRoute}/transactions/{id}";
 
             client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(_getTransactionApiToken);
-            //_httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-            //client.DefaultRequestHeaders.Add("x-api-key", _getTransactionApiToken);
             var response = await RetryService.DoAsync(client.GetAsync(new Uri(getTransactionApiRoute)), 2, TimeSpan.FromSeconds(2)).ConfigureAwait(false);
 
             if (response.StatusCode is HttpStatusCode.NotFound)
