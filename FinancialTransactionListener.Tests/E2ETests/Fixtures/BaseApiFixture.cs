@@ -55,11 +55,7 @@ namespace FinancialTransactionListener.Tests.E2ETests.Fixtures
                 // GetContext method blocks while waiting for a request. 
                 var context = _httpListener.GetContext();
                 var response = context.Response;
-                //if (context.Request.Headers["Authorization"] != Token)
-                //{
-                //    response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                //}
-                if (context.Request.Headers["x-api-key"] != Token)
+                if (context.Request.Headers["Authorization"] != Token)
                 {
                     response.StatusCode = (int) HttpStatusCode.Unauthorized;
                 }
