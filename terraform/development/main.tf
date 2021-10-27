@@ -100,10 +100,10 @@ resource "aws_ssm_parameter" "financial_transaction_listeners_sqs_queue_arn" {
   value = aws_sqs_queue.financial_transaction_listener_queue.arn
 }
 
-module "financial_transaction_listener_cw_dashboard" {
-  source                     = "github.com/LBHackney-IT/aws-hackney-common-terraform.git//modules/cloudwatch/dashboards/listener-dashboard"
-  environment_name           = var.environment_name
-  listener_name              = "financial-transaction-listener"
-  sqs_queue_name             = aws_sqs_queue.financial_transaction_listener_queue.name
-  sqs_dead_letter_queue_name = aws_sqs_queue.financial_transaction_dead_letter_queue.name
-}
+# module "financial_transaction_listener_cw_dashboard" {
+#  source                     = "github.com/LBHackney-IT/aws-hackney-common-terraform.git//modules/cloudwatch/dashboards/listener-dashboard"
+#  environment_name           = var.environment_name
+#  listener_name              = "financial-transaction-listener"
+#  sqs_queue_name             = aws_sqs_queue.financial_transaction_listener_queue.name
+#  sqs_dead_letter_queue_name = aws_sqs_queue.financial_transaction_dead_letter_queue.name
+# }
