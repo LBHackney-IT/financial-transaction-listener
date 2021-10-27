@@ -41,10 +41,8 @@ namespace FinancialTransactionListener
             //services.ConfigureDynamoDB();
 
             services.AddHttpClient();
-            services.AddScoped<IIndexTransactionUseCase, IndexTransactionUseCase>();
-
-            //services.AddScoped<ITransactionApiGateway, TransactionApiGateway>();
-            //services.AddScoped<IEsGateway, EsGateway>();
+            services.AddScoped<IEsGateway, EsGateway>();
+            services.AddScoped<ITransactionApiGateway, TransactionApiGateway>();
             services.ConfigureElasticSearch(Configuration);
             base.ConfigureServices(services);
         }
@@ -72,7 +70,7 @@ namespace FinancialTransactionListener
         /// <param name="message"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-       // [LogCall(LogLevel.Information)]
+        //[LogCall(LogLevel.Information)]
         private async Task ProcessMessageAsync(SQSEvent.SQSMessage message, ILambdaContext context)
         {
             context.Logger.LogLine($"Processing message {message.MessageId}");
