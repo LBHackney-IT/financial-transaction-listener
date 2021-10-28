@@ -145,6 +145,8 @@ custom:
     production: vpc-0ce853ddb64e8fb3c
   vpc:
     development:
+      securityGroupIds:
+        - Ref: LambdaSecurityGroup
       subnetIds:
         - subnet-0deabb5d8fb9c3446
         - subnet-000b89c249f12a8ad
