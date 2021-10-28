@@ -39,8 +39,8 @@ services:
     links:
       #- dynamodb-database
       - financial-transaction-listener-elasticsearch
-    ##networks:
-    ##   - elastic
+    networks:
+       - elastic
 
   financial-transaction-listener-elasticsearch:
    image:  financial-transaction-listener-elasticsearch
