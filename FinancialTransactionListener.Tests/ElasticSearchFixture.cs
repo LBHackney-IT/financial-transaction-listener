@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Hackney.Core.Testing.Shared;
 using Xunit;
 
 namespace FinancialTransactionListener.Tests
@@ -36,10 +37,11 @@ namespace FinancialTransactionListener.Tests
             _host = _factory.CreateHostBuilder(null).Build();
             _host.Start();
 
+
             WaitForEsInstance(ElasticSearchClient);
             EnsureIndexesExist(ElasticSearchClient);
 
-            //LogCallAspectFixture.SetupLogCallAspect();
+            LogCallAspectFixture.SetupLogCallAspect();
         }
 
         public void Dispose()
@@ -61,13 +63,13 @@ namespace FinancialTransactionListener.Tests
 
         private static void EnsureIndexesExist(IElasticClient elasticSearchClient)
         {
-            foreach (var (key, value) in _indexes)
+            foreach (var index in _indexes)
             {
-                elasticSearchClient.Indices.Delete(key);
+                elasticSearchClient.Indices.Delete(index.Key);
 
-                var indexDoc = File.ReadAllTextAsync(value).Result;
-                elasticSearchClient.LowLevel.Indices.CreateAsync<BytesResponse>(key, indexDoc)
-                                                    .ConfigureAwait(true);
+                var indexDoc = File.ReadAllTextAsync(index.Value).Result;
+                elasticSearchClient.LowLevel.Indices.CreateAsync<BytesResponse>(index.Key, indexDoc)
+                    .ConfigureAwait(true);
             }
         }
 
@@ -99,14 +101,13 @@ namespace FinancialTransactionListener.Tests
             if (ex != null)
                 throw ex;
         }
-
         private static void EnsureEnvVarConfigured(string name, string defaultValue)
         {
             if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(name)))
                 Environment.SetEnvironmentVariable(name, defaultValue);
         }
 
-        public static void GivenATransactionIsNotIndexed(Transaction transaction)
+        public void GivenATransactionIsNotIndexed(Transaction transaction)
         {
             // Nothing to do here
         }

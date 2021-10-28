@@ -48,7 +48,7 @@ namespace FinancialTransactionListener.Tests.E2ETests.Stories
         public void TransactionNotFound(string eventType)
         {
             var transactionId = Guid.NewGuid();
-            this.Given(g => TransactionApiFixture.GivenTheTransactionDoesNotExist(transactionId))
+            this.Given(g => _transactionApiFixture.GivenTheTransactionDoesNotExist(transactionId))
                 .When(w => _steps.WhenTheFunctionIsTriggered(transactionId, eventType))
                 .Then(t => _steps.ThenATransactionNotFoundExceptionIsThrown(transactionId))
                 .BDDfy();
@@ -59,9 +59,9 @@ namespace FinancialTransactionListener.Tests.E2ETests.Stories
         {
             var transactionId = Guid.NewGuid();
             this.Given(g => _transactionApiFixture.GivenTheTransactionExists(transactionId))
-                .And(h => ElasticSearchFixture.GivenATransactionIsNotIndexed(TransactionApiFixture.ResponseObject))
+                .And(h => _esFixture.GivenATransactionIsNotIndexed(_transactionApiFixture.ResponseObject))
                 .When(w => _steps.WhenTheFunctionIsTriggered(transactionId, EventTypes.TransactionCreatedEvent))
-                .Then(t => _steps.ThenTheIndexIsCreatedWithTheTransaction(TransactionApiFixture.ResponseObject, _esFixture.ElasticSearchClient))
+                .Then(t => _steps.ThenTheIndexIsCreatedWithTheTransaction(_transactionApiFixture.ResponseObject, _esFixture.ElasticSearchClient))
                 .BDDfy();
         }
 
@@ -70,9 +70,9 @@ namespace FinancialTransactionListener.Tests.E2ETests.Stories
         {
             var transactionId = Guid.NewGuid();
             this.Given(g => _transactionApiFixture.GivenTheTransactionExists(transactionId))
-                .And(h => _esFixture.GivenATransactionIsIndexedWithDifferentInfo(TransactionApiFixture.ResponseObject))
+                .And(h => _esFixture.GivenATransactionIsIndexedWithDifferentInfo(_transactionApiFixture.ResponseObject))
                 .When(w => _steps.WhenTheFunctionIsTriggered(transactionId, EventTypes.TransactionUpdatedEvent))
-                .Then(t => _steps.ThenTheIndexIsCreatedWithTheTransaction(TransactionApiFixture.ResponseObject, _esFixture.ElasticSearchClient))
+                .Then(t => _steps.ThenTheIndexIsCreatedWithTheTransaction(_transactionApiFixture.ResponseObject, _esFixture.ElasticSearchClient))
                 .BDDfy();
         }
     }
