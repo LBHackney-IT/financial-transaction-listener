@@ -22,7 +22,7 @@ functions:
     environment:
       ### Re-use the same parameter as used by web api applications
       ENVIRONMENT:  ${ssm:/housing-tl/${self:provider.stage}/aspnetcore-environment}
-      ELASTICSEARCH_DOMAIN_URL: ${ssm:/housing-finance/${self:provider.stage}/elasticsearch-domain}
+      ELASTICSEARCH_DOMAIN_URL: ${ssm:/housing-search-api/${self:provider.stage}/elasticsearch-domain}
       TransactionApiUrl: ${ssm:/housing-finance/${self:provider.stage}/financial-transaction-api-url}
       TransactionApiToken: ${ssm:/housing-finance/${self:provider.stage}/financial-transaction-api-token}
     events:
