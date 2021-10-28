@@ -75,5 +75,6 @@ namespace FinancialTransactionListener.Tests.E2ETests.Stories
                 .Then(t => _steps.ThenTheIndexIsCreatedWithTheTransaction(_transactionApiFixture.ResponseObject, _esFixture.ElasticSearchClient))
                 .BDDfy();
         }
+
     }
 }
