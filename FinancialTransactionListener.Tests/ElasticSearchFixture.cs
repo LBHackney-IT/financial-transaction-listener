@@ -15,10 +15,10 @@ namespace FinancialTransactionListener.Tests
 {
     public class ElasticSearchFixture
     {
-        public IElasticClient ElasticSearchClient => _factory?.ElasticSearchClient;
 
         private readonly MockApplicationFactory _factory;
         private readonly IHost _host;
+        public IElasticClient ElasticSearchClient => _factory?.ElasticSearchClient;
 
         private static readonly string _indexNameTransactions = "transactions";
         private static readonly Dictionary<string, string> _indexes = new Dictionary<string, string>
