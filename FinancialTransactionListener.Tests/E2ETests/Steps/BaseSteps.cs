@@ -10,6 +10,7 @@ namespace FinancialTransactionListener.Tests.E2ETests.Steps
         protected readonly JsonSerializerOptions JsonOptions;
         protected readonly List<Action> _cleanup = new List<Action>();
 
+
         protected BaseSteps()
         {
             JsonOptions = CreateJsonOptions();

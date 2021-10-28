@@ -1,35 +1,35 @@
 using System;
 using AutoFixture;
 using FinancialTransactionListener.Domain.Transaction;
+using Hackney.Core.Testing.Shared.E2E;
 
 namespace FinancialTransactionListener.Tests.E2ETests.Fixtures
 {
     public class TransactionApiFixture : BaseApiFixture<Transaction>
     {
-        public TransactionApiFixture()
+        private readonly Fixture _fixture = new Fixture();
+        public TransactionApiFixture() : base(FixtureConstants.TransactionApiRoute, FixtureConstants.TransactionApiToken)
         {
             Environment.SetEnvironmentVariable("TransactionApiUrl", FixtureConstants.TransactionApiRoute);
             Environment.SetEnvironmentVariable("TransactionApiToken", FixtureConstants.TransactionApiToken);
-
-            Route = FixtureConstants.TransactionApiRoute;
-            Token = FixtureConstants.TransactionApiToken;
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (!disposing || Disposed) return;
-            ResponseObject = null;
-            base.Dispose(true);
+            if (disposing && !_disposed)
+            {
+                base.Dispose(disposing);
+            }
         }
 
-        public static void GivenTheTransactionDoesNotExist(Guid id)
+        public void GivenTheTransactionDoesNotExist(Guid id)
         {
             // Nothing to do here
         }
 
         public Transaction GivenTheTransactionExists(Guid id)
         {
-            ResponseObject = Fixture.Build<Transaction>()
+            ResponseObject = _fixture.Build<Transaction>()
                                      .With(x => x.Id, id)
                                      .Create();
             return ResponseObject;

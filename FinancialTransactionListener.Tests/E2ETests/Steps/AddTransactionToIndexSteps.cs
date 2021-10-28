@@ -63,17 +63,17 @@ namespace FinancialTransactionListener.Tests.E2ETests.Steps
         public void ThenATransactionNotFoundExceptionIsThrown(Guid id)
         {
             _lastException.Should().NotBeNull();
-            // _lastException.Should().BeOfType(typeof(EntityNotFoundException<Transaction>));
+            _lastException.Should().BeOfType(typeof(EntityNotFoundException<Transaction>));
             (_lastException as EntityNotFoundException<Transaction>)?.Id.Should().Be(id);
         }
         public async Task ThenTheIndexIsCreatedWithTheTransaction(
             Transaction transaction, IElasticClient esClient)
         {
-            var result = await esClient.GetAsync<Transaction>(transaction.Id, g => g.Index("transactions"))
+            var result = await esClient.GetAsync<QueryableTransaction>(transaction.Id, g => g.Index("transactions"))
                 .ConfigureAwait(false);
 
             var transactionInIndex = result.Source;
-            transactionInIndex.Should().BeEquivalentTo(transaction);
+            transactionInIndex.Should().BeEquivalentTo(transaction, x => x.Excluding(y => y.TargetId));
 
             _cleanup.Add(async () => await esClient.DeleteAsync(new DeleteRequest("transactions", transactionInIndex.Id))
                 .ConfigureAwait(false));
