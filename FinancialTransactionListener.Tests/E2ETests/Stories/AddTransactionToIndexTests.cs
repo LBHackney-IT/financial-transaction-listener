@@ -42,38 +42,38 @@ namespace FinancialTransactionListener.Tests.E2ETests.Stories
             _disposed = true;
         }
 
-        //[Theory]
-        //[InlineData(EventTypes.TransactionCreatedEvent)]
-        //[InlineData(EventTypes.TransactionUpdatedEvent)]
-        //public void TransactionNotFound(string eventType)
-        //{
-        //    var transactionId = Guid.NewGuid();
-        //    this.Given(g => TransactionApiFixture.GivenTheTransactionDoesNotExist(transactionId))
-        //        .When(w => _steps.WhenTheFunctionIsTriggered(transactionId, eventType))
-        //        .Then(t => _steps.ThenATransactionNotFoundExceptionIsThrown(transactionId))
-        //        .BDDfy();
-        //}
+        [Theory]
+        [InlineData(EventTypes.TransactionCreatedEvent)]
+        [InlineData(EventTypes.TransactionUpdatedEvent)]
+        public void TransactionNotFound(string eventType)
+        {
+            var transactionId = Guid.NewGuid();
+            this.Given(g => TransactionApiFixture.GivenTheTransactionDoesNotExist(transactionId))
+                .When(w => _steps.WhenTheFunctionIsTriggered(transactionId, eventType))
+                .Then(t => _steps.ThenATransactionNotFoundExceptionIsThrown(transactionId))
+                .BDDfy();
+        }
 
-        //[Fact]
-        //public void TransactionCreatedAddedToIndex()
-        //{
-        //    var transactionId = Guid.NewGuid();
-        //    this.Given(g => _transactionApiFixture.GivenTheTransactionExists(transactionId))
-        //        .And(h => ElasticSearchFixture.GivenATransactionIsNotIndexed(TransactionApiFixture.ResponseObject))
-        //        .When(w => _steps.WhenTheFunctionIsTriggered(transactionId, EventTypes.TransactionCreatedEvent))
-        //        .Then(t => _steps.ThenTheIndexIsCreatedWithTheTransaction(TransactionApiFixture.ResponseObject, _esFixture.ElasticSearchClient))
-        //        .BDDfy();
-        //}
+        [Fact]
+        public void TransactionCreatedAddedToIndex()
+        {
+            var transactionId = Guid.NewGuid();
+            this.Given(g => _transactionApiFixture.GivenTheTransactionExists(transactionId))
+                .And(h => ElasticSearchFixture.GivenATransactionIsNotIndexed(TransactionApiFixture.ResponseObject))
+                .When(w => _steps.WhenTheFunctionIsTriggered(transactionId, EventTypes.TransactionCreatedEvent))
+                .Then(t => _steps.ThenTheIndexIsCreatedWithTheTransaction(TransactionApiFixture.ResponseObject, _esFixture.ElasticSearchClient))
+                .BDDfy();
+        }
 
-        //[Fact]
-        //public void TransactionUpdateInIndex()
-        //{
-        //    var transactionId = Guid.NewGuid();
-        //    this.Given(g => _transactionApiFixture.GivenTheTransactionExists(transactionId))
-        //        .And(h => _esFixture.GivenATransactionIsIndexedWithDifferentInfo(TransactionApiFixture.ResponseObject))
-        //        .When(w => _steps.WhenTheFunctionIsTriggered(transactionId, EventTypes.TransactionUpdatedEvent))
-        //        .Then(t => _steps.ThenTheIndexIsCreatedWithTheTransaction(TransactionApiFixture.ResponseObject, _esFixture.ElasticSearchClient))
-        //        .BDDfy();
-        //}
+        [Fact]
+        public void TransactionUpdateInIndex()
+        {
+            var transactionId = Guid.NewGuid();
+            this.Given(g => _transactionApiFixture.GivenTheTransactionExists(transactionId))
+                .And(h => _esFixture.GivenATransactionIsIndexedWithDifferentInfo(TransactionApiFixture.ResponseObject))
+                .When(w => _steps.WhenTheFunctionIsTriggered(transactionId, EventTypes.TransactionUpdatedEvent))
+                .Then(t => _steps.ThenTheIndexIsCreatedWithTheTransaction(TransactionApiFixture.ResponseObject, _esFixture.ElasticSearchClient))
+                .BDDfy();
+        }
     }
 }
