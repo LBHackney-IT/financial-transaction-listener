@@ -58,8 +58,8 @@ services:
      - 9300:9300
    volumes:
     -  financial-transaction-listener-esdata-test:/usr/share/elasticsearch/data
-   networks:
-    - elastic
+   #networks:
+   # - elastic
   #  # Alter if not using DynamoDb
   #dynamodb-database:
   #  image: amazon/dynamodb-local
