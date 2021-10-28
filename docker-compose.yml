@@ -39,8 +39,8 @@ services:
     links:
       #- dynamodb-database
       - financial-transaction-listener-elasticsearch
-    #networks:
-    #   - elastic
+    ##networks:
+    ##   - elastic
 
   financial-transaction-listener-elasticsearch:
    image:  financial-transaction-listener-elasticsearch
@@ -58,8 +58,8 @@ services:
      - 9300:9300
    volumes:
     -  financial-transaction-listener-esdata-test:/usr/share/elasticsearch/data
-  # networks:
-  #  - elastic
+   networks:
+    - elastic
   #  # Alter if not using DynamoDb
   #dynamodb-database:
   #  image: amazon/dynamodb-local
@@ -71,7 +71,7 @@ volumes:
   financial-transaction-listener-esdata-test:
      driver: local
 
-#networks:
-#  elastic:
-#    driver: bridge
+networks:
+  elastic:
+    driver: bridge
   
