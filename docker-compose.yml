@@ -13,13 +13,13 @@ services:
     environment:
      - ENVIRONMENT=LocalDevelopment
       # Alter if not using DynamoDb
-     - DynamoDb_LocalMode=true
-     - DynamoDb_LocalServiceUrl=http://dynamodb-database:8000
-     - AWS_REGION=eu-west-2
-     - AWS_ACCESS_KEY_ID=local
-     - AWS_SECRET_ACCESS_KEY=local
-    links:
-      - dynamodb-database
+    # - DynamoDb_LocalMode=true
+    # - DynamoDb_LocalServiceUrl=http://dynamodb-database:8000
+    # - AWS_REGION=eu-west-2
+    # - AWS_ACCESS_KEY_ID=local
+    # - AWS_SECRET_ACCESS_KEY=local
+    #links:
+    #  - dynamodb-database
 
   financial-transaction-listener-test:
     image: financial-transaction-listener-test
