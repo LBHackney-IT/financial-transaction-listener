@@ -62,8 +62,6 @@ commands:
     parameters:
       stage:
         type: string
-      aws-account:
-        type: string
     steps:
       - *attach_workspace
       - checkout
@@ -75,7 +73,7 @@ commands:
             apt-get update && apt-get install -y nodejs
       - run:
           name: Install serverless CLI
-          command: sudo npm i -g serverless
+          command: npm i -g serverless
       - run:
           name: Build lambda
           command: |
@@ -86,7 +84,7 @@ commands:
           name: Deploy lambda
           command: |
             cd ./FinancialTransactionListener/
-            sls deploy --stage <<parameters.stage>> --account <<parameters.aws-account>> --conceal
+            sls deploy --stage <<parameters.stage>> --conceal
 
 jobs:
   check-code-formatting:
@@ -145,106 +143,113 @@ jobs:
     steps:
       - deploy-lambda:
           stage: "development"
-          aws-account: $AWS_ACCOUNT_DEVELOPMENT
   deploy-to-staging:
     executor: docker-dotnet
     steps:
       - deploy-lambda:
           stage: "staging"
-          aws-account: $AWS_ACCOUNT_STAGING
   deploy-to-production:
     executor: docker-dotnet
     steps:
       - deploy-lambda:
           stage: "production"
-          aws-account: $AWS_ACCOUNT_PRODUCTION
 
 workflows:
   check-and-deploy-development:
     jobs:
-      - check-code-formatting
-      - build-and-test
-  #    - assume-role-development:
-  #        context: api-assume-role-housing-development-context
-  #        requires:
-  #          - build-and-test
-  #        filters:
-  #          branches:
-  #            only: master
-  #    - terraform-init-and-apply-to-development:
-  #        requires:
-  #          - assume-role-development
-  #        filters:
-  #          branches:
-  #            only: master
-  #    - deploy-to-development:
-  #        context: api-assume-role-housing-development-context
-  #        requires:
-  #          - terraform-init-and-apply-to-development
-  #        filters:
-  #          branches:
-  #            only: master
-  #check-and-deploy-staging-and-production:
-  #    jobs:
-  #    - check-code-formatting:
-  #        filters:
-  #          branches:
-  #            only: release
-  #    - build-and-test:
-  #        filters:
-  #          branches:
-  #            only: release
-  #    - assume-role-staging:
-  #        context: api-assume-role-housing-staging-context
-  #        requires:
-  #            - build-and-test
-  #        filters:
-  #           branches:
-  #             only: release
-  #    - terraform-init-and-apply-to-staging:
-  #        requires:
-  #          - assume-role-staging
-  #        filters:
-  #          branches:
-  #            only: release
-  #    - deploy-to-staging:
-  #        requires:
-  #          - terraform-init-and-apply-to-staging
-  #        filters:
-  #          branches:
-  #            only: release
-  #    - permit-production-terraform-release:
-  #        type: approval
-  #        requires:
-  #          - deploy-to-staging
-  #        filters:
-  #          branches:
-  #            only: release
-  #    - assume-role-production:
-  #        context: api-assume-role-housing-production-context
-  #        requires:
-  #            - permit-production-terraform-release
-  #        filters:
-  #           branches:
-  #             only: release
-  #    - terraform-init-and-apply-to-production:
-  #        requires:
-  #          - assume-role-production
-  #        filters:
-  #          branches:
-  #            only: release
-  #    - permit-production-release:
-  #        type: approval
-  #        requires:
-  #          - deploy-to-staging
-  #          - terraform-init-and-apply-to-production
-  #        filters:
-  #          branches:
-  #            only: release
-  #    - deploy-to-production:
-  #        requires:
-  #          - permit-production-release
-  #          - terraform-init-and-apply-to-production
-  #        filters:
-  #          branches:
-  #            only: release
+      - check-code-formatting:
+          context: api-nuget-token-context
+      - build-and-test:
+          context:
+            - api-nuget-token-context
+            - SonarCloud                
+      - assume-role-development:
+          context: api-assume-role-housing-development-context
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              only: develop
+      - terraform-init-and-apply-to-development:
+          requires:
+            - assume-role-development
+          filters:
+            branches:
+              only: develop
+      - deploy-to-development:
+          context: api-nuget-token-context
+          requires:
+            - terraform-init-and-apply-to-development
+          filters:
+            branches:
+              only: develop
+  check-and-deploy-staging-and-production:
+      jobs:
+      - check-code-formatting:
+          context: api-nuget-token-context
+          filters:
+            branches:
+              only: master
+      - build-and-test:
+          context:
+            - api-nuget-token-context
+            - SonarCloud                
+          filters:
+            branches:
+              only: master
+      - assume-role-staging:
+          context: api-assume-role-housing-staging-context
+          requires:
+              - build-and-test
+          filters:
+             branches:
+               only: master
+      - terraform-init-and-apply-to-staging:
+          requires:
+            - assume-role-staging
+          filters:
+            branches:
+              only: master
+      - deploy-to-staging:
+          context: api-nuget-token-context
+          requires:
+            - terraform-init-and-apply-to-staging
+          filters:
+            branches:
+              only: master
+      - permit-production-terraform-release:
+          type: approval
+          requires:
+            - deploy-to-staging
+          filters:
+            branches:
+              only: master
+      - assume-role-production:
+          context: api-assume-role-housing-production-context
+          requires:
+              - permit-production-terraform-release
+          filters:
+             branches:
+               only: master
+      - terraform-init-and-apply-to-production:
+          requires:
+            - assume-role-production
+          filters:
+            branches:
+              only: master
+      - permit-production-release:
+          type: approval
+          requires:
+            - deploy-to-staging
+            - terraform-init-and-apply-to-production
+          filters:
+            branches:
+              only: master
+      - deploy-to-production:
+          context: api-nuget-token-context
+          requires:
+            - permit-production-release
+            - terraform-init-and-apply-to-production
+          filters:
+            branches:
+              only: master
