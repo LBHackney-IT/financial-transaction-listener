@@ -28,6 +28,7 @@ services:
       dockerfile: FinancialTransactionListener.Tests/Dockerfile
       args:
         - LBHPACKAGESTOKEN=${LBHPACKAGESTOKEN}
+        - SONAR_TOKEN=${SONAR_TOKEN}
     environment:
       - ELASTICSEARCH_DOMAIN_URL=http://financial-transaction-listener-elasticsearch:9200
       # Alter if not using DynamoDb
