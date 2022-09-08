@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace FinancialTransactionListener.Infrastructure
+namespace FinancialTransactionListener.V1.Infrastructure
 {
     public static class JsonOptions
     {

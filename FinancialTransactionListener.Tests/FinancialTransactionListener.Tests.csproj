@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
@@ -18,7 +18,9 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Hackney.Core.Testing.Shared" Version="1.49.0" />
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
+    <PackageReference Include="Hackney.Core.Logging" Version="1.49.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="5.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -45,6 +47,25 @@
   </ItemGroup>
     
   <ItemGroup>
+    <Compile Remove="DynamoDbFixture.cs" />
+    <Compile Remove="E2ETests\Fixtures\EntityFixture.cs" />
+    <Compile Remove="E2ETests\Steps\DoSomethingUseCaseSteps.cs" />
+    <Compile Remove="E2ETests\Stories\DoSomethingTests.cs" />
+    <Compile Remove="Factories\EntityFactoryTest.cs" />
+    <Compile Remove="Gateway\DynamoDbEntityGatewayTests.cs" />
+    <Compile Remove="Gateway\EsGatewayTests.cs" />
+    <Compile Remove="Gateway\TransactionApiGatewayTests.cs" />
+    <Compile Remove="LogCallAspectFixture.cs" />
+  </ItemGroup>
+    
+  <ItemGroup>
     <Folder Include="Factories\" />
+    <Folder Include="Gateway\" />
+  </ItemGroup>
+    
+  <ItemGroup>
+    <None Update="data\indexes\transactions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

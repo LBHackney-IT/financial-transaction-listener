@@ -1,8 +1,6 @@
 using Amazon.XRay.Recorder.Core;
 using Amazon.XRay.Recorder.Core.Strategies;
 using Amazon.XRay.Recorder.Handlers.AwsSdk;
-using FinancialTransactionListener.Infrastructure;
-using Hackney.Core.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -11,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
 using System.Text.Json;
+using Hackney.Core.Logging;
 
 namespace FinancialTransactionListener
 {
@@ -22,7 +21,7 @@ namespace FinancialTransactionListener
     [ExcludeFromCodeCoverage]
     public abstract class BaseFunction
     {
-        protected readonly static JsonSerializerOptions _jsonOptions = JsonOptions.CreateJsonOptions();
+        protected static readonly JsonSerializerOptions JsonOptions = V1.Infrastructure.JsonOptions.CreateJsonOptions();
 
         protected IConfigurationRoot Configuration { get; }
         protected IServiceProvider ServiceProvider { get; }
@@ -45,8 +44,8 @@ namespace FinancialTransactionListener
             ConfigureServices(services);
 
             // TODO - Remove if not using DynamoDb
-            if (Configuration.GetValue<bool>("DynamoDb_LocalMode"))
-                AWSXRayRecorder.Instance.ContextMissingStrategy = ContextMissingStrategy.LOG_ERROR;
+            //if (Configuration.GetValue<bool>("DynamoDb_LocalMode"))
+            //    AWSXRayRecorder.Instance.ContextMissingStrategy = ContextMissingStrategy.LOG_ERROR;
 
             ServiceProvider = services.BuildServiceProvider();
             ServiceProvider.UseLogCall();
@@ -79,7 +78,7 @@ namespace FinancialTransactionListener
         /// <param name="services"></param>
         protected virtual void ConfigureServices(IServiceCollection services)
         {
-            services.AddLogCallAspect();
+            //services.AddLogCallAspect();
         }
     }
 }

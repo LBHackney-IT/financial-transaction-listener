@@ -7,19 +7,19 @@ services:
       context: .
       dockerfile: FinancialTransactionListener/Dockerfile
       args:
-        - LBHPACKAGESTOKEN=${LBHPACKAGESTOKEN}
+      - LBHPACKAGESTOKEN=${LBHPACKAGESTOKEN}
     ports:
       - 3000:3000
     environment:
      - ENVIRONMENT=LocalDevelopment
       # Alter if not using DynamoDb
-     - DynamoDb_LocalMode=true
-     - DynamoDb_LocalServiceUrl=http://dynamodb-database:8000
-     - AWS_REGION=eu-west-2
-     - AWS_ACCESS_KEY_ID=local
-     - AWS_SECRET_ACCESS_KEY=local
-    links:
-      - dynamodb-database
+    # - DynamoDb_LocalMode=true
+    # - DynamoDb_LocalServiceUrl=http://dynamodb-database:8000
+    # - AWS_REGION=eu-west-2
+    # - AWS_ACCESS_KEY_ID=local
+    # - AWS_SECRET_ACCESS_KEY=local
+    #links:
+    #  - dynamodb-database
 
   financial-transaction-listener-test:
     image: financial-transaction-listener-test
@@ -28,20 +28,51 @@ services:
       dockerfile: FinancialTransactionListener.Tests/Dockerfile
       args:
         - LBHPACKAGESTOKEN=${LBHPACKAGESTOKEN}
+        - SONAR_TOKEN=${SONAR_TOKEN}
     environment:
-      - ENVIRONMENT=LocalDevelopment
+      - ELASTICSEARCH_DOMAIN_URL=http://financial-transaction-listener-elasticsearch:9200
       # Alter if not using DynamoDb
-      - DynamoDb_LocalMode=true
-      - DynamoDb_LocalServiceUrl=http://dynamodb-database:8000
-      - AWS_REGION=eu-west-2
-      - AWS_ACCESS_KEY_ID=local
-      - AWS_SECRET_ACCESS_KEY=local
+      #- DynamoDb_LocalMode=true
+      #- DynamoDb_LocalServiceUrl=http://dynamodb-database:8000
+      #- AWS_REGION=eu-west-2
+      #- AWS_ACCESS_KEY_ID=local
+      #- AWS_SECRET_ACCESS_KEY=local
     links:
-      - dynamodb-database
-    
-  # Alter if not using DynamoDb
-  dynamodb-database:
-    image: amazon/dynamodb-local
-    ports:
-      - 8000:8000
+      #- dynamodb-database
+      - financial-transaction-listener-elasticsearch
+    networks:
+       - elastic
+
+  financial-transaction-listener-elasticsearch:
+   image:  financial-transaction-listener-elasticsearch
+   container_name:  financial-transaction-listener-elasticsearch
+   build:
+     context: .
+     dockerfile: data/elasticsearch/Dockerfile
+   environment:
+     - xpack.security.enabled=false
+     - discovery.type=single-node
+     - bootstrap.memory_lock=true
+     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+   ports:
+     - 9200:9200
+     - 9300:9300
+   volumes:
+    -  financial-transaction-listener-esdata-test:/usr/share/elasticsearch/data
+   networks:
+    - elastic
+  #  # Alter if not using DynamoDb
+  #dynamodb-database:
+  #  image: amazon/dynamodb-local
+  #  ports:
+  #    - 8000:8000
       
+
+volumes:
+  financial-transaction-listener-esdata-test:
+     driver: local
+
+networks:
+  elastic:
+    driver: bridge
+  
